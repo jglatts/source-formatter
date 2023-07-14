@@ -1,0 +1,21 @@
+    /*
+        comment block
+        for testing
+        removal of comments
+    */
+
+    private boolean checkTokens(String[] tokens) 
+    {
+
+        /* 
+            another comment block
+            test test
+        */
+        if (x) 
+        {
+            
+        }
+
+        /* one more just for fun */
+        return tokens[0].equals("{") && tokens.length == 1;
+    }
