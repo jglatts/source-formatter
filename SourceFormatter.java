@@ -44,8 +44,18 @@ class SourceFormatter {
     public boolean generateFormat()  {
         Scanner scanner = openFileScanner();
         ArrayList<String> source = new ArrayList<>();
-        int count = 0;
+        
+        parse(scanner, source);
+        if (remove_comments) {
+            removeComments(source);
+        }
 
+        return writeOut(source, new File(out_file));
+    }
+
+    private void parse(Scanner scanner, ArrayList<String> source) {
+        int count = 0;
+        
         while (scanner.hasNextLine()) {
             String source_line = scanner.nextLine(); 
             if (checkTokens(source_line.split(" ")) && count != 0) {
@@ -56,16 +66,12 @@ class SourceFormatter {
                 count++;
             }
         }
-
-        if (remove_comments) {
-            removeComments(source);
-        }
-
-        return writeOut(source, new File(out_file));
     }
+
 
     private void removeComments(ArrayList<String> source) {
         ArrayList<Integer> remove_indices = new ArrayList<>();
+        
         for (int i = 0; i < source.size(); i++) {
             if (source.get(i).contains("/*")) {
                 while (true) {
@@ -75,23 +81,23 @@ class SourceFormatter {
                 }
             }
         }
-
+        
         for (int i = 0; i < remove_indices.size(); i++) {
             int index = (i == 0) ? remove_indices.get(i).intValue() : remove_indices.get(i).intValue() - i;
             source.remove(index);
-
         }
-
     }
 
     private boolean checkTokens(String[] tokens) {
         boolean paran_check = false;
+        
         for (int i = 0; i < tokens.length; i++) {
             if (tokens[i].equals(")")) 
                 paran_check = true;
             if (!paran_check && tokens[i].equals("{"))
                 return true;
         }
+        
         return false;
     }
 
