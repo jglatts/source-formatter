@@ -24,6 +24,8 @@ public static void main(String[] args) {
 <br>
 Pipe in a txt file full of file names
 <br>
+
+
 ```
 java SourceFormatter < files.txt
 ```
@@ -31,6 +33,8 @@ java SourceFormatter < files.txt
 <br>
 For single file usage
 <br>
+
+
 ```
 java SourceFormatter big_file.c
 ```
