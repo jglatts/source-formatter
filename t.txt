@@ -11,9 +11,12 @@
             another comment block
             test test
         */
-        if (x) 
+        if (x) /*!< DMA interrupt status register */
         {
-            
+          int x = 5; /* remove this comment */  
+          /* another cmd */  
+          int y; /* another comment to remove */
+          // something else
         }
 
         /* one more just for fun */
