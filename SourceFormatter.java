@@ -47,9 +47,10 @@ class SourceFormatter {
         
         parseBrackets(scanner, source);
         if (remove_comments) {
-            removeComments(source);
+            removeComments(source); 
         }
 
+        scanner.close();
         return writeOut(source, new File(out_file));
     }
 
@@ -143,6 +144,25 @@ class SourceFormatter {
 
     private void replace(int index, ArrayList<String> source) {
         source.set(index-1, source.get(index-1) + " {");
+    }
+
+    public static void pipe() {
+        Scanner scanner = new Scanner(System.in);
+        while (scanner.hasNext()) {
+            String file_name = scanner.nextLine();
+            new SourceFormatter(file_name, "new_"+ file_name, true).generateFormat();
+            System.out.println("Please see new_" + file_name);
+        }
+        scanner.close();
+    }
+
+    public static void main(String[] args) {
+        if (args.length == 0)
+            pipe();
+        else {
+                new SourceFormatter(args[0], "new_"+ args[0], true).generateFormat();
+                System.out.println("Please see new_" + args[0]);            
+        }    
     }
 
 
