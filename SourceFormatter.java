@@ -18,7 +18,7 @@ class SourceFormatter {
     public SourceFormatter() {
         this("", "o.txt", false);
     }
-
+    
     public SourceFormatter(String in_file) {
         this(in_file, "o.txt", false);
     }
@@ -69,7 +69,6 @@ class SourceFormatter {
         }
     }
 
-
     private void removeComments(ArrayList<String> source) {
         checkMultiLineComments(source);
         checkSingleLineComments(source);
@@ -80,17 +79,20 @@ class SourceFormatter {
             String[] words = source.get(i).split(" ");
             for (int j = 0; j < words.length; j++) {
                 if (words[j].contains("/*") || words[j].equals("/*")) {
-                    int index = source.get(i).indexOf("/*");
-                    source.set(i, source.get(i).substring(0, index));
+                    setSourceIndex(source, i, "/*");
                     break;
                 }
                 else if (words[j].contains("//") || words[j].equals("//")) {
-                    int index = source.get(i).indexOf("//");
-                    source.set(i, source.get(i).substring(0, index));
+                    setSourceIndex(source, i, "//");
                     break;
                 }
             }
         }        
+    }
+
+    private void setSourceIndex(ArrayList<String> source, int i, String seq) {
+        int end_index = source.get(i).indexOf(seq);
+        source.set(i, source.get(i).substring(0, end_index));
     }
 
     private void checkMultiLineComments(ArrayList<String> source) {
