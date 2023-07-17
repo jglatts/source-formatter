@@ -44,4 +44,4 @@ java SourceFormatter big_file.c
 ## Format STM32Cube code
 ```
 java STMFormatter <project_name>
-``'
+```
