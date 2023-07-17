@@ -38,3 +38,10 @@ For single file usage
 ```
 java SourceFormatter big_file.c
 ```
+
+<br>
+
+## Format STM32Cube code
+```
+java STMFormatter <project_name>
+``'
