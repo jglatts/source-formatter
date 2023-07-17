@@ -9,6 +9,7 @@
 import java.util.*;
 import java.io.*;
 
+
 class SourceFormatter {
 
     private String in_file;
@@ -118,15 +119,28 @@ class SourceFormatter {
     }
 
     private boolean checkTokens(String[] tokens) {
-        boolean paran_check = false;
+        boolean valid = false;
         
         for (int i = 0; i < tokens.length; i++) {
-            if (tokens[i].equals(")")) 
-                paran_check = true;
-            if (!paran_check && tokens[i].equals("{"))
+            if (checkValidToken(tokens[i])) {
+                valid = true;
+            }
+            if (tokens[i].contains(")")) 
+                valid = true;
+            if (!valid && tokens[i].equals("{"))
                 return true;
         }
         
+        return false;
+    }
+
+    private boolean checkValidToken(String line) {
+        String[] valid_tokens = {"struct", "enum", "#define"};
+        for (int j = 0; j < valid_tokens.length; j++) {
+            if (line.contains(valid_tokens[j])) {
+                return true;
+            }
+        }
         return false;
     }
 
