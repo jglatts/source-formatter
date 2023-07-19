@@ -119,28 +119,31 @@ class SourceFormatter {
     }
 
     private boolean checkTokens(String[] tokens) {
-        boolean valid = false;
-        
+        boolean ret = false;
+
         for (int i = 0; i < tokens.length; i++) {
             if (checkValidToken(tokens[i])) {
-                valid = true;
+                return false;
             }
-            if (tokens[i].contains(")")) 
-                valid = true;
-            if (!valid && tokens[i].equals("{"))
-                return true;
+            if (tokens[i].equals("{"))
+                ret = true;
         }
-        
-        return false;
+
+        return ret;
     }
 
     private boolean checkValidToken(String line) {
-        String[] valid_tokens = {"struct", "enum", "#define"};
-        for (int j = 0; j < valid_tokens.length; j++) {
-            if (line.contains(valid_tokens[j])) {
+        line = line.trim();
+        String[] valid_tokens = {"struct", "enum", "#define", "[]", ")", "(", "}"};
+
+        for (String tok : valid_tokens) {
+            System.out.println("checking " + line + " for " + tok);
+            if (line.contains(tok)) {
+                System.out.println("found " + tok + " in " + line + "\n\n");
                 return true;
             }
         }
+
         return false;
     }
 
@@ -164,11 +167,13 @@ class SourceFormatter {
 
     public static void pipe() {
         Scanner scanner = new Scanner(System.in);
+
         while (scanner.hasNext()) {
             String file_name = scanner.nextLine();
             new SourceFormatter(file_name, "new_"+ file_name, true).generateFormat();
             System.out.println("Please see new_" + file_name);
         }
+        
         scanner.close();
     }
 
